@@ -100,13 +100,13 @@ class Display: UIView {
     // Draws a segment given its four corners, supplied in clockwise order.
     // I put one bug in this code. Find it and fix it. Once it's fixed, you'll
     // see a nicely drawn 8.
-    func drawSegment(context: CGContextRef, upperLeft: CGPoint, upperRight: CGPoint, lowerRight: CGPoint, lowerLeft: CGPoint, on:Bool) {
+    func drawSegment(context: CGContextRef, upperLeft: CGPoint, upperRight: CGPoint, lowerRight: CGPoint, lowerLeft: CGPoint, on: Bool) {
         let color = on ? ledOnColor : ledOffColor
         CGContextSetFillColorWithColor(context, color)
         CGContextMoveToPoint(context, upperLeft.x, upperLeft.y)
         CGContextAddLineToPoint(context, upperRight.x, upperRight.y)
         CGContextAddLineToPoint(context, lowerRight.x, lowerRight.y)
-        CGContextAddLineToPoint(context, lowerRight.x, lowerLeft.y)
+        CGContextAddLineToPoint(context, lowerLeft.x, lowerLeft.y)
         CGContextAddLineToPoint(context, upperLeft.x, upperLeft.y)
         CGContextFillPath(context)
     }
@@ -157,9 +157,15 @@ class Display: UIView {
         let xOrigin = bounds.origin.x
         let yOrigin = bounds.origin.y
         // This needs re-doing. The segmentWidth is the whole view width. It should only be one-fifteenth of that.
-        let sscRect = CGRectMake(xOrigin, yOrigin, bounds.size.width, segmentHeight)
+        let sscRect = CGRectMake(xOrigin, yOrigin, bounds.size.width/15, segmentHeight)
         // This needs completing. It only draws one SSC. It needs to be put in a loop to show all 15 SSCs.
+        var i = 0
+        while i < 12 {
         drawSSC(context, sscRect:sscRect, mask:segmentMasks[8])
+        //There needs to be something here that shifts the drawSSC actions to the right by the width of the origin
+        //but I'm not sure what that should be... right now it's just building a ton of 8s on top of each other
+        i += 1;
+        }
     }
 
 }
