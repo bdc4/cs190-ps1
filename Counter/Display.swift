@@ -154,17 +154,16 @@ class Display: UIView {
         let context = UIGraphicsGetCurrentContext()!
         let bounds = self.bounds
         let segmentHeight = bounds.size.height
-        let xOrigin = bounds.origin.x
+        _ = bounds.origin.x
         let yOrigin = bounds.origin.y
         // This needs re-doing. The segmentWidth is the whole view width. It should only be one-fifteenth of that.
-        let sscRect = CGRectMake(xOrigin, yOrigin, bounds.size.width/15, segmentHeight)
         // This needs completing. It only draws one SSC. It needs to be put in a loop to show all 15 SSCs.
-        var i = 0
-        while i < 12 {
-        drawSSC(context, sscRect:sscRect, mask:segmentMasks[8])
-        //There needs to be something here that shifts the drawSSC actions to the right by the width of the origin
-        //but I'm not sure what that should be... right now it's just building a ton of 8s on top of each other
-        i += 1;
+        var i = CGFloat(0)
+        var j = 0
+        while i < 15 {
+            drawSSC(context, sscRect:CGRectMake(bounds.origin.x+i*24, yOrigin, bounds.size.width/15, segmentHeight), mask: masks[j])
+        j += 1
+        i += 1
         }
     }
 
